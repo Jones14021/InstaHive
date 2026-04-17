@@ -16,7 +16,6 @@
             instaloader
             colorama
             tqdm
-            requests
             psutil
           ]);
         in

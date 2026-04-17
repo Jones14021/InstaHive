@@ -77,6 +77,8 @@ You can use this repository as a flake and run InstaHive directly:
 nix run github:Jones14021/InstaHive
 ```
 
+If you're using a different fork, replace `Jones14021` with your repository owner.
+
 To install from your NixOS configuration:
 
 ```nix
