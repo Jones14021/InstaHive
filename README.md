@@ -64,7 +64,7 @@ Then follow the prompts to log in and paste any Instagram **post/reel** URL.
 
 ## 📂 Downloads Location
 
-- **Default:** `~/Downloads` (Linux) or `C:/Users/YourName/Downloads` (Windows)
+- **Default:** The standard user Downloads directory (`~/Downloads`, using OS-native path format)
 - On startup, the CLI prompts for a download directory and shows the default path.
 - Press **Enter** to use the shown default.
 - If you choose a custom path, it is saved to `~/.insta-hive` and reused as the default on future runs.

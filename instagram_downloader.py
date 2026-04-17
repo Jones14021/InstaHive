@@ -82,7 +82,11 @@ def choose_download_path():
         print(Fore.RED + f"[X] Cannot use download directory '{selected_path}': {e}")
         print(Fore.MAGENTA + f"[!] Falling back to default: {prompt_default}")
         selected_path = prompt_default
-        os.makedirs(selected_path, exist_ok=True)
+        try:
+            os.makedirs(selected_path, exist_ok=True)
+        except OSError as fallback_error:
+            print(Fore.RED + f"[X] Failed to create fallback directory '{selected_path}': {fallback_error}")
+            raise SystemExit(1)
 
     if chosen_input:
         save_download_path(selected_path)
