@@ -5,19 +5,24 @@
 
   outputs = { self, nixpkgs }:
     let
-      systems = [ "x86_64-linux" "aarch64-linux" ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
     in
     {
       packages = forAllSystems (system:
         let
           pkgs = import nixpkgs { inherit system; };
-          python = pkgs.python3.withPackages (ps: with ps; [
-            instaloader
-            colorama
-            tqdm
-            requests
-            psutil
+          python = pkgs.python3.withPackages (ps: [
+            (pkgs.python3.pkgs.toPythonModule pkgs.instaloader)
+            ps.colorama
+            ps.tqdm
+            ps.requests
+            ps.psutil
           ]);
         in
         {
@@ -44,12 +49,12 @@
         {
           default = pkgs.mkShell {
             packages = [
-              (pkgs.python3.withPackages (ps: with ps; [
-                instaloader
-                colorama
-                tqdm
-                requests
-                psutil
+              (pkgs.python3.withPackages (ps: [
+                (pkgs.python3.pkgs.toPythonModule pkgs.instaloader)
+                ps.colorama
+                ps.tqdm
+                ps.requests
+                ps.psutil
               ]))
             ];
           };

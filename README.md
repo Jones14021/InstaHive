@@ -78,7 +78,7 @@ nix run github:Jones14021/InstaHive
 ```
 
 If you're using a different fork, replace `Jones14021` with your repository owner.
-This flake currently targets Linux systems (NixOS).
+This flake targets Linux and macOS systems (`x86_64-linux`, `aarch64-linux`, `x86_64-darwin`, `aarch64-darwin`).
 
 To install from your NixOS configuration:
 
