@@ -16,6 +16,7 @@
             instaloader
             colorama
             tqdm
+            requests
             psutil
           ]);
         in
@@ -35,5 +36,23 @@
           program = "${self.packages.${system}.default}/bin/instahive";
         };
       });
+
+      devShells = forAllSystems (system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        {
+          default = pkgs.mkShell {
+            packages = [
+              (pkgs.python3.withPackages (ps: with ps; [
+                instaloader
+                colorama
+                tqdm
+                requests
+                psutil
+              ]))
+            ];
+          };
+        });
     };
 }
