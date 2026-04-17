@@ -1,9 +1,9 @@
+import logging
 import os
 import platform
-import re
 import random
+import re
 import shutil
-import logging
 from time import sleep
 from tqdm import tqdm
 import instaloader
