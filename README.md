@@ -74,16 +74,16 @@ Then follow the prompts to log in and paste any Instagram **post/reel** URL.
 You can use this repository as a flake and run InstaHive directly:
 
 ```bash
-nix run github:Jones14021/InstaHive
+nix run github:<owner>/InstaHive
 ```
 
-If you're using a different fork, replace `Jones14021` with your repository owner.
+Replace `<owner>` with the GitHub owner of the fork/repository you want to use.
 
 To install from your NixOS configuration:
 
 ```nix
 {
-  inputs.instahive.url = "github:Jones14021/InstaHive";
+  inputs.instahive.url = "github:<owner>/InstaHive";
 
   outputs = { self, nixpkgs, instahive, ... }: {
     nixosConfigurations.my-host = nixpkgs.lib.nixosSystem {
