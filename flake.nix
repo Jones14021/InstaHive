@@ -31,7 +31,6 @@
             name = "instahive";
             runtimeInputs = [ python ];
             text = ''
-              export PYTHONPATH="${PYTHONPATH:+$PYTHONPATH:}${./.}"
               exec ${python}/bin/python ${./instagram_downloader.py} "$@"
             '';
           };
