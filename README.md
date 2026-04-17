@@ -22,6 +22,7 @@
 - 💻 Works on both **Windows** and **Linux**
 - ⚡ **Progress bar** during downloads for better visibility
 - 🔒 **Log suppression** to minimize unnecessary logs
+- 🧭 Mode picker: download a **single URL** or your **saved posts** in cautious batch mode
 
 ---
 
@@ -83,6 +84,13 @@ nix run --refresh github:Jones14021/InstaHive
 If you're using a different fork, replace `Jones14021` with your repository owner.
 This flake targets Linux and macOS systems (`x86_64-linux`, `aarch64-linux`, `x86_64-darwin`, `aarch64-darwin`).
 
+To run from a branch (instead of default `main`), use `?ref=<branch-name>`:
+
+```bash
+# Example: run from branch "copilot/update-readme-and-add-interactive-mode"
+nix run --refresh github:Jones14021/InstaHive?ref=copilot/update-readme-and-add-interactive-mode
+```
+
 To install from your NixOS configuration:
 
 ```nix
@@ -110,6 +118,32 @@ To install from your NixOS configuration:
 
 - **Logging**: The script suppresses unnecessary logging from Instaloader to avoid cluttering the terminal.
 - **Session File**: A session file is saved to avoid repeated logins. You can delete it to log in again.
+
+---
+
+## 🧪 Saved Posts Batch Mode (Interactive)
+
+After you choose the download directory, InstaHive now asks for a mode:
+
+1. **Single Instagram URL** (existing behavior)
+2. **Saved posts batch mode** (for your logged-in account)
+
+In batch mode, you can choose:
+
+- **(a) Last X saved posts** (capped per run for safety)
+- **(b) Select posts from a list** (with optional username/caption filtering, then index selection like `1,3-5`)
+
+### ⚠️ Is this feasible/smart?
+
+It is technically feasible, but Instagram can rate-limit or challenge accounts that automate too aggressively.  
+This mode is intentionally conservative:
+
+- small batch cap per run
+- random delays between downloads
+- periodic longer cooldown pauses
+- one-at-a-time downloads (no parallel scraping)
+
+Even with safeguards, there is still risk. Prefer small, infrequent runs and only use your own account/session.
 
 ---
 
