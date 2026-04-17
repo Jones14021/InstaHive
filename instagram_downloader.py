@@ -11,6 +11,8 @@ from colorama import Fore
 
 logging.basicConfig(level=logging.CRITICAL)
 
+CONFIG_FILE = os.path.expanduser("~/.insta-hive")
+
 
 def show_banner():
     banners = [
@@ -38,15 +40,61 @@ def show_banner():
     ]
     print(random.choice(banners))
 
-# Determine platform-specific download path
-if platform.system() == "Windows":
-    user = os.getlogin()
-    download_path = f"C://Users//{user}//Downloads"
-else:
-    download_path = "/data/data/com.termux/files/home/storage/downloads"
-
 session_file = "ig_session"
-temp_dir = os.path.join(download_path, "temp_download")
+
+
+def get_system_download_path():
+    return os.path.join(os.path.expanduser("~"), "Downloads")
+
+
+def get_saved_download_path():
+    if not os.path.isfile(CONFIG_FILE):
+        return None
+    try:
+        with open(CONFIG_FILE, "r", encoding="utf-8") as config:
+            saved_path = config.read().strip()
+            if saved_path:
+                return os.path.abspath(os.path.expanduser(saved_path))
+    except OSError:
+        pass
+    return None
+
+
+def save_download_path(path):
+    try:
+        with open(CONFIG_FILE, "w", encoding="utf-8") as config:
+            config.write(path)
+    except OSError as e:
+        print(Fore.RED + f"[X] Failed to save custom download directory: {e}")
+
+
+def choose_download_path():
+    system_default = get_system_download_path()
+    prompt_default = get_saved_download_path() or system_default
+    prompt = Fore.YELLOW + f"Download directory [{prompt_default}]: "
+    chosen_input = input(prompt).strip()
+
+    if chosen_input:
+        selected_path = os.path.abspath(os.path.expanduser(chosen_input))
+    else:
+        selected_path = prompt_default
+
+    try:
+        os.makedirs(selected_path, exist_ok=True)
+    except OSError as e:
+        print(Fore.RED + f"[X] Cannot use download directory '{selected_path}': {e}")
+        print(Fore.MAGENTA + f"[!] Falling back to default: {system_default}")
+        selected_path = system_default
+        try:
+            os.makedirs(selected_path, exist_ok=True)
+        except OSError as fallback_error:
+            print(Fore.RED + f"[X] Failed to create fallback directory '{selected_path}': {fallback_error}")
+            raise SystemExit(1)
+
+    if chosen_input:
+        save_download_path(selected_path)
+
+    return selected_path
 
 # Clear screen function
 def clear_screen():
@@ -97,6 +145,8 @@ def download_post(shortcode):
 # Start the script
 clear_screen()
 show_banner()
+download_path = choose_download_path()
+temp_dir = os.path.join(download_path, "temp_download")
 
 # Login to Instagram
 username = input(Fore.YELLOW + "Enter your Instagram username: ")
