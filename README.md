@@ -20,7 +20,6 @@
 - 🧠 Smart shortcode extractor
 - 🔐 Login with **session saving**
 - 💻 Works on both **Windows** and **Android-Termux**
-- 🛠️ **Auto update** to the latest version
 - ⚡ **Progress bar** during downloads for better visibility
 - 🔒 **Log suppression** to minimize unnecessary logs
 
@@ -59,8 +58,7 @@ Then follow the prompts to log in and paste any Instagram **post/reel** URL.
 1. **Login**: Upon first run, you'll be asked to log in with your Instagram credentials. The session is saved for future logins, so you won't need to log in again unless you choose to.
 2. **Download**: Simply paste a URL from Instagram, and the tool will automatically extract the shortcode and start downloading the content.
 3. **Progress Bar**: The download process now features a progress bar for better feedback on large files.
-4. **Updates**: The script checks for new updates each time it runs and prompts you to download the latest version if available.
-5. **Clean Interface**: The tool clears the screen after each download, ensuring a smooth user experience.
+4. **Clean Interface**: The tool clears the screen after each download, ensuring a smooth user experience.
 
 ---
 
@@ -71,9 +69,34 @@ Then follow the prompts to log in and paste any Instagram **post/reel** URL.
 
 ---
 
-## 🖥️ Auto Update
+## ❄️ Nix Flake
 
-The tool automatically checks for new versions on GitHub. If a new version is available, it will prompt you to update the script. You can also manually trigger an update by running the script again.
+You can use this repository as a flake and run InstaHive directly:
+
+```bash
+nix run github:Jones14021/InstaHive
+```
+
+To install from your NixOS configuration:
+
+```nix
+{
+  inputs.instahive.url = "github:Jones14021/InstaHive";
+
+  outputs = { self, nixpkgs, instahive, ... }: {
+    nixosConfigurations.my-host = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ({ pkgs, ... }: {
+          environment.systemPackages = [
+            instahive.packages.${pkgs.system}.default
+          ];
+        })
+      ];
+    };
+  };
+}
+```
 
 ---
 
