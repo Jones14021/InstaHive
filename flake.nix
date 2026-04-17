@@ -18,7 +18,7 @@
         let
           pkgs = import nixpkgs { inherit system; };
           python = pkgs.python3.withPackages (ps: [
-            pkgs.instaloader
+            (pkgs.python3.pkgs.toPythonModule pkgs.instaloader)
             ps.colorama
             ps.tqdm
             ps.requests
@@ -50,7 +50,7 @@
           default = pkgs.mkShell {
             packages = [
               (pkgs.python3.withPackages (ps: [
-                pkgs.instaloader
+                (pkgs.python3.pkgs.toPythonModule pkgs.instaloader)
                 ps.colorama
                 ps.tqdm
                 ps.requests
