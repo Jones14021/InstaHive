@@ -44,8 +44,6 @@ session_file = "ig_session"
 
 
 def get_system_download_path():
-    if platform.system() == "Windows":
-        return os.path.join(os.path.expanduser("~"), "Downloads")
     return os.path.join(os.path.expanduser("~"), "Downloads")
 
 
@@ -76,8 +74,7 @@ def choose_download_path():
     prompt = Fore.YELLOW + f"Download directory [{prompt_default}]: "
     chosen_input = input(prompt).strip()
 
-    selected_path = prompt_default if not chosen_input else os.path.expanduser(chosen_input)
-    selected_path = os.path.abspath(selected_path)
+    selected_path = prompt_default if not chosen_input else os.path.abspath(os.path.expanduser(chosen_input))
 
     try:
         os.makedirs(selected_path, exist_ok=True)
