@@ -17,19 +17,21 @@
       packages = forAllSystems (system:
         let
           pkgs = import nixpkgs { inherit system; };
-          python = pkgs.python3.withPackages (ps: [
+          pythonPackages = ps: [
             (pkgs.python3.pkgs.toPythonModule pkgs.instaloader)
             ps.colorama
             ps.tqdm
             ps.requests
             ps.psutil
-          ]);
+          ];
+          python = pkgs.python3.withPackages pythonPackages;
         in
         {
           default = pkgs.writeShellApplication {
             name = "instahive";
             runtimeInputs = [ python ];
             text = ''
+              export PYTHONPATH="${./.}:$PYTHONPATH"
               exec ${python}/bin/python ${./instagram_downloader.py} "$@"
             '';
           };
@@ -45,17 +47,18 @@
       devShells = forAllSystems (system:
         let
           pkgs = import nixpkgs { inherit system; };
+          pythonPackages = ps: [
+            (pkgs.python3.pkgs.toPythonModule pkgs.instaloader)
+            ps.colorama
+            ps.tqdm
+            ps.requests
+            ps.psutil
+          ];
         in
         {
           default = pkgs.mkShell {
             packages = [
-              (pkgs.python3.withPackages (ps: [
-                (pkgs.python3.pkgs.toPythonModule pkgs.instaloader)
-                ps.colorama
-                ps.tqdm
-                ps.requests
-                ps.psutil
-              ]))
+              (pkgs.python3.withPackages pythonPackages)
             ];
           };
         });
