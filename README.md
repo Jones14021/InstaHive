@@ -68,6 +68,7 @@ Then follow the prompts to log in and paste any Instagram **post/reel** URL.
 - On startup, the CLI prompts for a download directory and shows the default path.
 - Press **Enter** to use the shown default.
 - If you choose a custom path, it is saved to `~/.insta-hive` and reused as the default on future runs.
+- To reset the saved custom path, delete `~/.insta-hive` or enter a new path when prompted.
 
 ---
 

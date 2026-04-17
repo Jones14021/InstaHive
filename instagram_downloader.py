@@ -74,14 +74,17 @@ def choose_download_path():
     prompt = Fore.YELLOW + f"Download directory [{prompt_default}]: "
     chosen_input = input(prompt).strip()
 
-    selected_path = prompt_default if not chosen_input else os.path.abspath(os.path.expanduser(chosen_input))
+    if chosen_input:
+        selected_path = os.path.abspath(os.path.expanduser(chosen_input))
+    else:
+        selected_path = prompt_default
 
     try:
         os.makedirs(selected_path, exist_ok=True)
     except OSError as e:
         print(Fore.RED + f"[X] Cannot use download directory '{selected_path}': {e}")
-        print(Fore.MAGENTA + f"[!] Falling back to default: {prompt_default}")
-        selected_path = prompt_default
+        print(Fore.MAGENTA + f"[!] Falling back to default: {system_default}")
+        selected_path = system_default
         try:
             os.makedirs(selected_path, exist_ok=True)
         except OSError as fallback_error:
