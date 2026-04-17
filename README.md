@@ -2,14 +2,14 @@
 
 **Author:** [Rajkishor Patra](https://github.com/imraj569)
 **Tool:** `instagram_downloader.py`
-**Platform:** Windows & Termux (Android)
+**Platform:** Windows & Linux
 **Repo:** https://github.com/imraj569/InstaHive
 
 ---
 
 ## 🚀 What is InstaHive?
 
-**InstaHive** is a simple and powerful Python-based command-line tool to download **Instagram posts, reels, and videos**. It supports both **Windows** and **Termux** environments.
+**InstaHive** is a simple and powerful Python-based command-line tool to download **Instagram posts, reels, and videos**. It supports both **Windows** and **Linux** environments.
 
 ---
 
@@ -19,7 +19,7 @@
 - 💾 Saves files directly to your **Downloads** folder
 - 🧠 Smart shortcode extractor
 - 🔐 Login with **session saving**
-- 💻 Works on both **Windows** and **Android-Termux**
+- 💻 Works on both **Windows** and **Linux**
 - ⚡ **Progress bar** during downloads for better visibility
 - 🔒 **Log suppression** to minimize unnecessary logs
 
@@ -64,8 +64,10 @@ Then follow the prompts to log in and paste any Instagram **post/reel** URL.
 
 ## 📂 Downloads Location
 
-- **Windows:** `C:/Users/YourName/Downloads`
-- **Termux:** `/data/data/com.termux/files/home/storage/downloads`
+- **Default:** `~/Downloads` (Linux) or `C:/Users/YourName/Downloads` (Windows)
+- On startup, the CLI prompts for a download directory and shows the default path.
+- Press **Enter** to use the shown default.
+- If you choose a custom path, it is saved to `~/.insta-hive` and reused as the default on future runs.
 
 ---
 
@@ -113,7 +115,7 @@ To install from your NixOS configuration:
 ## 🏷️ Topics
 
 `instagram-downloader` `python-instagram-downloader` `download-instagram-posts`
-`download-instagram-reels` `cli-tool` `termux` `windows` `instaloader`
+`download-instagram-reels` `cli-tool` `linux` `windows` `instaloader`
 `social-media-downloader` `automation` `python-tool`
 
 ---
